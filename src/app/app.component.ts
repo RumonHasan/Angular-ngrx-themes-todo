@@ -88,9 +88,11 @@ export class AppComponent {
   themeChange(){
    this.toggleTheme();
    if(this.themeStateLocal){
-    this.overlayContainer.getContainerElement().classList.add('dark-theme')
-   }else{
     this.overlayContainer.getContainerElement().classList.remove('dark-theme');
+    this.overlayContainer.getContainerElement().classList.add('light-theme');
+   }else{
+    this.overlayContainer.getContainerElement().classList.remove('light-theme');
+    this.overlayContainer.getContainerElement().classList.add('dark-theme');
    }
   }
 }
