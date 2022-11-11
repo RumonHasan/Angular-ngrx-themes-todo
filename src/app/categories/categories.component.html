@@ -1,0 +1,17 @@
+<mat-form-field appearance="fill" [style.width.px]=327>
+    <mat-label>Select a category</mat-label>
+    <mat-select [(value)] = "selected" >
+        <mat-option (click)="showCategoryInput()" *ngIf="categoryInput">
+            Go With the Existing Options
+        </mat-option>
+        <mat-option (click)="showCategoryInput()" *ngIf="!categoryInput">
+            Add Custom Category + 
+        </mat-option>
+        <mat-option *ngFor="let option of categories; 
+        let index = index;"
+        [value]="option"
+        (click)="optionFunctions()">
+          {{option}}  
+        </mat-option>
+    </mat-select>
+</mat-form-field>

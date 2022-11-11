@@ -1,0 +1,72 @@
+<div *ngIf="!task">
+    <h1>There is no task available</h1>
+</div>
+<mat-card class="item" *ngIf="task">
+    <mat-card-content class="card-content">
+        <div>
+            <h2>{{task.title}}</h2>
+            <p>
+                {{task.description}}
+            </p>
+            <p
+            class="category">#{{task.category}}</p>
+        </div>
+        <div>
+            <mat-menu #taskMenu="matMenu">
+                <mat-list>
+                    <div>
+                        <div mat-subheader>
+                            <b>Task Actions</b>
+                        </div>
+                        <mat-list-item class="action-list">
+                            <button class="button" mat-button (click)="getDeleteId(task.id, task.category)">
+                                Delete
+                            </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <button class="button"
+                        (click)="getEditContent(task)" mat-button>
+                            Edit
+                        </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <button (click)="displayCommentBox(task.id)" class="button" mat-button>
+                                Add Comment
+                            </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <button (click)="addToDatabase(task)" class="button" mat-button>
+                                Archive
+                            </button>
+                        </mat-list-item>
+                    </div>
+                </mat-list>
+            </mat-menu>
+            <button mat-button [mat-menu-trigger-for]="taskMenu">
+                <mat-icon>
+                    more_vert
+                </mat-icon>
+            </button>
+        </div>
+    </mat-card-content>
+    <div>
+        <mat-label class="comment-label">
+            Comments
+        </mat-label>
+    </div>
+    <mat-card-footer *ngIf="task.comments">
+        <div class="comment-container">
+            <ol *ngFor="let comment of taskComments" class="comment-list">
+                <li class="comment">
+                    {{comment.commentDetails}}
+                    <button mat-button class="button delete-comment" (click)="deleteCommentId(comment.id)">
+                        <mat-icon>
+                            delete
+                        </mat-icon>
+                    </button>
+                </li>
+            </ol>
+        </div>
+    </mat-card-footer>
+</mat-card>
+

@@ -1,0 +1,82 @@
+.item {
+  cursor: pointer;
+  margin: 10px;
+}
+
+.item:hover {
+  transform: scale(1.01);
+  transition: 0.5s ease-in-out;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.category-button {
+  border: 1px solid gray;
+  padding: 5px;
+}
+
+.button {
+  border: 0.5px solid rgb(166, 166, 166);
+  cursor: pointer;
+  width: 100%;
+}
+
+.delete {
+  background-color: rgb(225, 76, 76);
+  color: aliceblue;
+}
+.delete:hover {
+  background-color: rgb(247, 143, 143);
+}
+.edit {
+  background-color: rgb(136, 225, 146);
+  color: white;
+}
+.category {
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comment-btn {
+  background-color: blueviolet;
+  color: white;
+}
+.comment-btn:hover {
+  background-color: rgb(166, 88, 240);
+}
+
+.comment-list {
+  width: 70%;
+}
+
+.comment-label {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.comment {
+  color: black;
+  font-weight: bold;
+  padding: 4px;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.delete-comment {
+  color: white;
+  background-color: rgb(255, 72, 72);
+  width: 15px;
+}
+
+.action-list {
+  width: 100%;
+}

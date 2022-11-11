@@ -1,0 +1,31 @@
+<div class="edit-form">
+    <mat-card-title>
+        <h3>
+            Edit Task Dialog
+        </h3>
+    </mat-card-title>
+    <mat-form-field appearance="fill" [style.width.px]=327>
+        <mat-label>
+            Edit Title
+        </mat-label>
+        <input class="input" matInput placeholder="Task Name"
+        [formControl]="editTitle" type="text"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" [style.width.px]=327>
+        <mat-label>Edit Description</mat-label>
+        <input class="input" matInput placeholder="Task Description"  [formControl]="editDescription"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" [style.width.px]=327>
+        <mat-label>Edit Category</mat-label>
+        <input class="input" matInput placeholder="Task Description"  [formControl]="editCategory"/>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+        <button (click)="editTaskUI()" mat-button>
+            Edit
+        </button>
+        <button (click)="onCloseDialogBox()" mat-button>
+            Cancel
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>
+    Add A New Task
+</h1>
+<div class="dialog-wrapper">
+    <div class="mat-dialog-content" mat-dialog-content>
+            <mat-form-field appearance="fill" [style.width.px]=327>
+                <mat-label>
+                    Task Title
+                </mat-label>
+                <input class="input" matInput placeholder="Task Name"
+                [formControl]="title" type="text"/>
+            </mat-form-field>
+            <mat-form-field appearance="fill" [style.width.px]=327>
+                <mat-label>Task Description</mat-label>
+                <input class="input" matInput placeholder="Task Description"  [formControl]="description"/>
+            </mat-form-field>
+
+            <div class="custom-category">
+                <mat-form-field appearance="fill" *ngIf="extraCategoryInput" [style.width.px]=327>
+                    <mat-label>Enter Custom Category</mat-label>
+                    <input matInput class="input" placeholder="Custom Category" [formControl]="customCategory">
+                </mat-form-field>
+                <button class="custom-category-button" mat-button *ngIf="extraCategoryInput" (click)="addCategory()">
+                    Add Category
+                </button>
+            </div>
+           
+            <app-categories [categories]="categoriesArray"
+                (emitCategorySelected)="receiveCategoryFromSelect($event)"
+            ></app-categories>
+    </div>
+
+    <div mat-dialog-actions>
+        <button class="button" mat-button (click)="onCanceCloseDialogBox()">Cancel</button>
+        <button class="button" mat-button (click)="onSubmit()">Submit</button>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<h3>
+    Add A Comment To Your Task
+</h3>
+<div class="comment-box">
+    <mat-form-field appearance="fill" [style.width.px]=327>
+        <mat-label>
+            Add Comment
+        </mat-label>
+        <input
+        matInput
+        [formControl] = "comment"/>
+    </mat-form-field>
+    <mat-dialog-actions>
+        <button (click)="submitComment()" mat-button class="button comment">
+            Add Comment
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,11 @@
+.edit-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.input {
+  width: 100px;
+}

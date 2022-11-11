@@ -1,0 +1,73 @@
+.parent-wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+
+.app-wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.toolbar {
+  border-bottom: 2px solid gray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.toolbar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.search-container {
+  margin-left: 30px;
+}
+.search-button {
+  margin-left: 20px;
+}
+.search-icon {
+  font-size: 30px;
+}
+.all-task-container {
+  padding: 10px;
+  height: 100%;
+  flex-wrap: wrap;
+  max-height: 400px;
+  display: grid;
+  display: grid;
+  grid-template-columns: 1fr 1fr 350px;
+}
+
+.add-button {
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px;
+  font-size: 15px;
+  color: aliceblue;
+  border: 1px solid rgb(74, 74, 74);
+}
+
+.add-button:hover {
+  transition: 0.5s ease-in-out;
+  transform: scale(1.05);
+}
+
+.footer {
+  width: 100%;
+  height: 20px;
+  padding: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(255, 250, 250);
+  background-color: rgb(244, 50, 50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-button {
+  margin-left: 100px;
+}
