@@ -61,5 +61,6 @@ export const initialStates = {
     filteredTasks: [],
     filterState: false,
     themeState: false,
+    categoryTasks: {}
 }
 

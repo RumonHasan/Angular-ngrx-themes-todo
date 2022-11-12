@@ -30,6 +30,7 @@ import { CommentDialogComponent } from './task/comment-dialog/comment-dialog.com
 // import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from './firebase/firebase_credentials';
 import { InprogressTaskComponent } from './inprogress-task/inprogress-task.component';
+import { CategoryTasksComponent } from './category-tasks/category-tasks.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { InprogressTaskComponent } from './inprogress-task/inprogress-task.compo
     EditDialogComponent,
     CommentDialogComponent,
     InprogressTaskComponent,
+    CategoryTasksComponent,
   ],
   imports: [
     BrowserModule,

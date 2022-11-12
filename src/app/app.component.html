@@ -57,13 +57,13 @@
   <!-- app wrapper-->
   <div class="app-wrapper" >
     <div *ngIf="!localFilterState">
-      <h3>
+      <h3 class="task-header">
         All Tasks
       </h3>
     </div>
 
     <div *ngIf="localFilterState">
-      <h3>
+      <h3 class="task-header">
         Filtered Tasks
       </h3>
     </div>
@@ -79,6 +79,15 @@
         ></app-task>
     </div>
   
+  </div>
+
+  <div class="category-wrapper">
+    <h3 class="task-header">
+      Categorical Distribution
+    </h3>
+    <div class="category-task-container">
+      <app-category-tasks [categoryTasks]="categoricalTasks"></app-category-tasks>
+    </div>
   </div>
 </div>
 

@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 // import { AngularFireDatabase } from '@angular/fire/compat/database';
 // import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
-import { controlThemeState, filterTasks, switchFilterState } from './state/tasks.actions';
+import { controlThemeState, filterTasks, passTasksByCategories, switchFilterState } from './state/tasks.actions';
 
 @Component({
   selector: 'app-root',
@@ -28,12 +28,15 @@ export class AppComponent {
   localFilterState: boolean = false;
   // theme state
   themeStateLocal!: boolean;
+  // categorical tasks
+  categoricalTasks!: object;
 
   constructor(
     private dialog: MatDialog,
     // getting the initial state from the task reducer
     private taskStore: Store<{taskReducer: {tasks: Task[], categories: [], 
-      filterState: boolean, filteredTasks: Task[], themeState: boolean}}>,
+      filterState: boolean, filteredTasks: Task[], themeState: boolean,
+      categoryTasks: object}}>,
     private overlayContainer: OverlayContainer,
     ){}
   //function to open a dialog box for adding a new todo
@@ -59,6 +62,13 @@ export class AppComponent {
     this.taskStore.select('taskReducer').subscribe((data)=>
       this.themeStateLocal = data.themeState
     );
+    // passing the categories and tasks for distribution... autorefresh
+    this.taskStore.dispatch(passTasksByCategories({categories: this.categories, 
+      tasks: this.todos}));
+      // get the data from category based on tasks
+    this.taskStore.select('taskReducer').subscribe((data)=>
+        this.categoricalTasks = data.categoryTasks
+    )
   }
   // open dialog 
   openDialog(){

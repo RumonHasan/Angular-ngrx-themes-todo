@@ -10,6 +10,11 @@
   flex-direction: column;
 }
 
+.category-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
 .toolbar {
   border-bottom: 2px solid gray;
   display: flex;
@@ -70,4 +75,11 @@
 
 .theme-button {
   margin-left: 100px;
+}
+
+.task-header {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
 }

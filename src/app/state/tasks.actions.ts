@@ -13,7 +13,8 @@ export const ACTIONS = {
     REFRESH_CATEGORY: 'REFRESH_CATEGORY',
     FILTER_TASKS: 'FILTER_TASKS',
     SWITCH_FILTER: 'SWITCH_FILTER',
-    SWITCH_THEME: 'SWITCH_THEME'
+    SWITCH_THEME: 'SWITCH_THEME',
+    PASS_TASKS_CATEGORIES: 'PASS_TASKS_CATEGORIES'
 }
 export const getTasks = createAction(ACTIONS.GET);
 // passing props to add new task
@@ -39,3 +40,5 @@ export const filterTasks = createAction(ACTIONS.FILTER_TASKS, props<{searchTerm:
 export const switchFilterState = createAction(ACTIONS.SWITCH_FILTER);
 // theme toggle function
 export const controlThemeState = createAction(ACTIONS.SWITCH_THEME);
+// category focus
+export const passTasksByCategories = createAction(ACTIONS.PASS_TASKS_CATEGORIES, props<{categories: any, tasks: any}>());

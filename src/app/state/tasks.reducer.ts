@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialStates } from "./tasks.state";
-import { getTasks, addNewTask, deleteTask, editTaskDialogState, editTask, getCommentId, addCommentToTask, deleteComment, toggleArchiveState, deleteCategorySearch, filterTasks, switchFilterState, controlThemeState } from "./tasks.actions";
+import { getTasks, addNewTask, deleteTask, editTaskDialogState, editTask, getCommentId, addCommentToTask, deleteComment, toggleArchiveState, deleteCategorySearch, filterTasks, switchFilterState, controlThemeState, passTasksByCategories } from "./tasks.actions";
 import { Task } from "../task/task";
 import { state } from "@angular/animations";
 
@@ -171,6 +171,30 @@ const task_reducer = createReducer(initialStates,
             themeState: !initalThemeState
         }
     }),
+
+    // receive categories and tasks for distribution
+    on(passTasksByCategories, (state: any, action)=>{
+        let categories: any = action.categories;
+        let tasks = action.tasks;
+        // distributing tasks to categories
+        let categoryObject: any = {};
+        for(let i = 0; i < categories.length; i++){
+            categoryObject[categories[i].toLowerCase()] = [];
+        };
+        // injecting arrays 
+        for(let index in tasks){
+            const category = tasks[index].category.toLowerCase();
+            if(categoryObject[category]){
+                categoryObject[category] = [...categoryObject[category], tasks[index]];
+            }else{
+                categoryObject[category] = [];
+            }
+        }
+        return {
+            ...state,
+            categoryTasks: categoryObject
+        }
+    })
  );
 
 // returning the primary reducer as a callable value
