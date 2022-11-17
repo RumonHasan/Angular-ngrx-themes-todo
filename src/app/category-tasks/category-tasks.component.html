@@ -1,5 +1,10 @@
-<div>
-    <div *ngFor="let categoryTasks of categoryTasks | keyvalue"> 
-        {{categoryTasks.key}}
-    </div>
+<div class="category-task-container" fxFlex> 
+        <ul *ngFor="let categoryTask of categoryTasks | keyvalue">
+                {{categoryTask.key}}
+            <li *ngFor="let task of fetchObjectValues(categoryTask.key)">
+                <mat-card>
+                    
+                </mat-card>
+            </li>
+        </ul>
 </div>

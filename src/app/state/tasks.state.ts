@@ -21,6 +21,16 @@ const taskItems: Task[] = [
       },
       {
         id:parseInt(getRandomIdNumber(6)),
+        title:'Become a Scientist',
+        description:'Task description is gonna be huge',
+        category:'Science',
+        inprogress: false,
+        comments:[],
+        archive: false,
+        createdAt: new Date()
+      },
+      {
+        id:parseInt(getRandomIdNumber(6)),
         title:'This is your first task',
         description:'Task description is gonna be huge',
         category:'Math',

@@ -14,5 +14,8 @@ export class CategoryTasksComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.categoryTasks);
   }
-
+  // get object values of arrays
+  fetchObjectValues(category: any){
+   return this.categoryTasks[category] && this.categoryTasks[category];
+  }
 }
