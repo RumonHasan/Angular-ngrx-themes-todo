@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AppComponent } from './app.component';
+import { KanbanAllModule } from '@syncfusion/ej2-angular-kanban';
 // animation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskComponent } from './task/task.component';
@@ -61,6 +62,7 @@ import { CategoryTasksComponent } from './category-tasks/category-tasks.componen
     MatMenuModule,
     MatListModule,
     MatAutocompleteModule,
+    KanbanAllModule,
     // reducer store module
     StoreModule.forRoot({
       taskReducer: taskReducer

@@ -1,8 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialStates } from "./tasks.state";
 import { getTasks, addNewTask, deleteTask, editTaskDialogState, editTask, getCommentId, addCommentToTask, deleteComment, toggleArchiveState, deleteCategorySearch, filterTasks, switchFilterState, controlThemeState, passTasksByCategories } from "./tasks.actions";
-import { Task } from "../task/task";
-import { state } from "@angular/animations";
 
 // main task reducer
 const task_reducer = createReducer(initialStates, 

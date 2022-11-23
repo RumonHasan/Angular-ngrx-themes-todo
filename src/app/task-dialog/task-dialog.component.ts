@@ -3,7 +3,7 @@ import { FormControl, FormGroup, } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { ServicesService } from '../services.service';
-import { addNewTask, switchFilterState } from '../state/tasks.actions';
+import { addNewTask, passTasksByCategories, switchFilterState } from '../state/tasks.actions';
 import { getRandomIdNumber } from '../state/tasks.state';
 @Component({
   selector: 'app-task-dialog',
@@ -27,12 +27,16 @@ export class TaskDialogComponent implements OnInit {
   // category received
   categoryFromSelect: String = '';
 
+  // new categories and tasks
+  newCategories: any;
+  newTasks: any;
+
   constructor( public dialogRef: MatDialogRef<TaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
     private categories: ServicesService,
     private controlCategoryInput: ServicesService,
     // accessing store
-    private taskStore: Store<{taskReducer: any}>) { 
+    private taskStore: Store<{taskReducer : {categories: [], tasks: []}}>) { 
       // receiving the changed state
       this.controlCategoryInput.getModifyToggleCategoryInput().subscribe(
         toggle => this.extraCategoryInput = toggle
@@ -69,7 +73,13 @@ export class TaskDialogComponent implements OnInit {
           archive: false
         }
         // passing on new task on the ngrx store
-        this.taskStore.dispatch(addNewTask({newTask: this.newTask}))
+        this.taskStore.dispatch(addNewTask({newTask: this.newTask}));
+        this.taskStore.select('taskReducer').subscribe(((data)=>{
+            this.newCategories = data.categories;
+            this.newTasks = data.tasks;
+       }));
+       this.taskStore.dispatch(passTasksByCategories({categories: this.newCategories, tasks: this.newTasks}));
+       console.log(this.newCategories, this.newTasks);
         this.onCanceCloseDialogBox();
         this.taskStore.dispatch(switchFilterState());
     }else{

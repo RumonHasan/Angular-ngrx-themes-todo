@@ -18,4 +18,12 @@ export class CategoryTasksComponent implements OnInit {
   fetchObjectValues(category: any){
    return this.categoryTasks[category] && this.categoryTasks[category];
   }
+  // header formatter function
+  textFormatter(header:any){
+    const headerArray = header.split('');
+    const newHeader =  headerArray.map((letter:any, index: number)=> 
+      index === 0 ? letter.toUpperCase() : letter
+    );
+    return newHeader.join('');
+  }
 }

@@ -1,9 +1,14 @@
 <div class="category-task-container" fxFlex> 
-        <ul *ngFor="let categoryTask of categoryTasks | keyvalue">
-                {{categoryTask.key}}
-            <li *ngFor="let task of fetchObjectValues(categoryTask.key)">
+        <ul *ngFor="let categoryTask of categoryTasks | keyvalue" class="category-task-block">
+            <h1 class="category-header" style="color:white; font-weight:bold">
+                #{{textFormatter(categoryTask.key)}}
+            </h1>
+            <li class="task-card" *ngFor="let task of fetchObjectValues(categoryTask.key)">
                 <mat-card>
-                    
+                    {{task.title}}
+                    <div style="color:rgb(246, 122, 122);">
+                        Description: {{task.description}}
+                    </div>
                 </mat-card>
             </li>
         </ul>
