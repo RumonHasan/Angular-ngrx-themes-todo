@@ -1,6 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialStates } from "./tasks.state";
-import { getTasks, addNewTask, deleteTask, editTaskDialogState, editTask, getCommentId, addCommentToTask, deleteComment, toggleArchiveState, deleteCategorySearch, filterTasks, switchFilterState, controlThemeState, passTasksByCategories } from "./tasks.actions";
+import { getTasks, addNewTask, deleteTask, editTaskDialogState, editTask, 
+    getCommentId, addCommentToTask, deleteComment, 
+    toggleArchiveState, deleteCategorySearch, 
+    filterTasks, switchFilterState, controlThemeState,
+     passTasksByCategories, getViews, activateCategoryView, 
+     activateAllView, turnToDefaultView } from "./tasks.actions";
 
 // main task reducer
 const task_reducer = createReducer(initialStates, 
@@ -63,7 +68,6 @@ const task_reducer = createReducer(initialStates,
     on(editTask, (state: any, action)=>{
         const newContent = action.newContent;
         const editId = action.updateId;
-        // edit logic
         const editedArray = state.tasks.map((singleTask: any)=>{
             // if the id is same then the object is edited
             if(singleTask.id === editId){
@@ -77,9 +81,14 @@ const task_reducer = createReducer(initialStates,
                 return singleTask;
             }
         });
+        // update the categories after editing the task
+        const categories: any = [];
+        editedArray.map((task: any)=> categories.push(task.category));
+        const uniqueCategories = [...new Set([...categories])];
         return {
             ...state,
-            tasks: editedArray
+            tasks: editedArray,
+            categories: uniqueCategories
         }
     }),
     // updating the comment id
@@ -144,7 +153,13 @@ const task_reducer = createReducer(initialStates,
     on(filterTasks, (state: any, action)=>{
         const searchTerm = action.searchTerm;
         const existingTasks = [...state.tasks];
-        const filteredTasks = existingTasks.filter((task: any)=>
+        if(searchTerm.toLowerCase() === 'all'){
+            return {
+                ...state,
+                filterState: false,
+            }
+        }else{
+            const filteredTasks = existingTasks.filter((task: any)=>
             task.category.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
             task.title.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
@@ -152,6 +167,7 @@ const task_reducer = createReducer(initialStates,
             ...state,
             filteredTasks: filteredTasks,
             filterState: true
+        }
         }
     }),
     // switch filter state to false
@@ -169,7 +185,6 @@ const task_reducer = createReducer(initialStates,
             themeState: !initalThemeState
         }
     }),
-
     // receive categories and tasks for distribution
     on(passTasksByCategories, (state: any, action)=>{
         let categories: any = action.categories;
@@ -191,6 +206,21 @@ const task_reducer = createReducer(initialStates,
         return {
             ...state,
             categoryTasks: categoryObject
+        }
+    }),
+    // turning on category view
+    on(activateCategoryView, (state: any, action)=>{
+        const categoryViewSwitch = !state.categoryView;
+        return {
+            ...state,
+           categoryView: categoryViewSwitch
+        }
+    }),
+    // always turn to default view when searching
+    on(turnToDefaultView, (state: any, action)=>{
+        return {
+            ...state,
+            categoryView: false,
         }
     })
  );

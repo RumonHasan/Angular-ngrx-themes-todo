@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { FormControl, FormGroup, } from '@angular/forms';
-import { editTask } from 'src/app/state/tasks.actions';
+import { editTask, passTasksByCategories } from 'src/app/state/tasks.actions';
 @Component({
   selector: 'app-edit-dialog',
   templateUrl: './edit-dialog.component.html',
@@ -15,10 +15,16 @@ export class EditDialogComponent implements OnInit {
   editDescription = new FormControl('');
   editCategory = new FormControl('');
 
+  // local states
+  afterEditCategories!: any;
+  afterEditTasks!: any;
+
   constructor(
     private editDialogRef: MatDialogRef<EditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
-    private taskStore: Store<{taskReducer: {editId: any}}>,
+    private taskStore: Store<{taskReducer: {editId: any,
+      tasks: [], categories: []
+    }}>,
   ) { 
     // fetching the edit ID
     this.taskStore.select('taskReducer').subscribe((data)=>
@@ -47,6 +53,13 @@ export class EditDialogComponent implements OnInit {
       // passing edited content along with id
       this.taskStore.dispatch(editTask({updateId: this.editId, newContent: editedContent}))
       this.onCloseDialogBox();
+      // refreshing the tasks categories
+      this.taskStore.select('taskReducer').subscribe((data)=>{
+        this.afterEditCategories = data.categories;
+        this.afterEditTasks = data.tasks;
+      }); // passing the edited tasks and categories
+      this.taskStore.dispatch(passTasksByCategories({categories: this.afterEditCategories, tasks: this.afterEditTasks}));
+      
     }else{
       console.log('edit form is empty');
     }

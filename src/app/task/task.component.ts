@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task } from './task';
-import { deleteCategorySearch, deleteComment, deleteTask, editTaskDialogState, getCommentId, switchFilterState, toggleArchiveState } from '../state/tasks.actions';
+import { deleteCategorySearch, deleteComment, deleteTask, editTaskDialogState, getCommentId, passTasksByCategories, switchFilterState, toggleArchiveState } from '../state/tasks.actions';
 import { Store } from '@ngrx/store';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,9 +24,13 @@ export class TaskComponent implements OnInit {
   // archive tasks local
   archivedTasksRef!: any;
 
+  // local categories and tasks after deletion
+  afterDeleteCategories!: [];
+  afterDeleteTasks!: [];
+
   constructor(
     // task reducer store
-    private taskStore: Store<{taskReducer: {editDialogOpen: boolean, archiveState: boolean}}>,
+    private taskStore: Store<{taskReducer: {editDialogOpen: boolean, archiveState: boolean, tasks: [], categories:[]}}>,
     private editDialog: MatDialog,
     private commentDialog: MatDialog,
     // private fireDb: AngularFirestore
@@ -106,7 +110,6 @@ export class TaskComponent implements OnInit {
         }
       })
   }
-
   // get delete id
   getDeleteId(id:any, category: any){
       const deleteId = parseInt(id);
@@ -119,9 +122,19 @@ export class TaskComponent implements OnInit {
         cancelButtonText: 'No keep it',
       }).then((result)=>{
         if(result.value){
+          // delete sub functions when the yes button
           this.taskStore.dispatch(deleteTask({deleteId: deleteId, deleteCategory: category}));
           this.taskStore.dispatch(deleteCategorySearch({deleteCategoryId: id, deleteCategory: category}));
           this.taskStore.dispatch(switchFilterState());
+          // switching category states
+          this.taskStore.select('taskReducer').subscribe((data: any)=>
+            {
+              this.afterDeleteCategories = data.categories;
+              this.afterDeleteTasks = data.tasks;
+            }
+          );
+          // pass it on to the next categories and tasks
+          this.taskStore.dispatch(passTasksByCategories({categories: this.afterDeleteCategories, tasks: this.afterDeleteTasks}));
           Swal.fire(
             'Deleted',
             'Task has been deleted',

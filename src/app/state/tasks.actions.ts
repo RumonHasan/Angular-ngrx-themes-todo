@@ -14,7 +14,12 @@ export const ACTIONS = {
     FILTER_TASKS: 'FILTER_TASKS',
     SWITCH_FILTER: 'SWITCH_FILTER',
     SWITCH_THEME: 'SWITCH_THEME',
-    PASS_TASKS_CATEGORIES: 'PASS_TASKS_CATEGORIES'
+    PASS_TASKS_CATEGORIES: 'PASS_TASKS_CATEGORIES',
+    GET_VIEWS: "GET_VIEWS",
+    // view actions
+    CATEGORY_VIEW: "CATEGORY_VIEW",
+    ALL_VIEW: "ALL_VIEW",
+    DEFAULT_VIEW: "DEFAULT_VIEW"
 }
 export const getTasks = createAction(ACTIONS.GET);
 // passing props to add new task
@@ -42,3 +47,8 @@ export const switchFilterState = createAction(ACTIONS.SWITCH_FILTER);
 export const controlThemeState = createAction(ACTIONS.SWITCH_THEME);
 // category focus
 export const passTasksByCategories = createAction(ACTIONS.PASS_TASKS_CATEGORIES, props<{categories: any, tasks: any}>());
+// get views
+export const getViews = createAction(ACTIONS.GET_VIEWS);
+export const activateCategoryView = createAction(ACTIONS.CATEGORY_VIEW);
+export const activateAllView = createAction(ACTIONS.ALL_VIEW);
+export const turnToDefaultView = createAction(ACTIONS.DEFAULT_VIEW);

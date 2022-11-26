@@ -58,6 +58,46 @@ const taskItems: Task[] = [
         comments: [],
         archive: false,
         createdAt: new Date()
+      } ,
+      {
+        id:parseInt(getRandomIdNumber(6)),
+        title:'This is your third task',
+        description:'Hey man',
+        category:'Horticulture',
+        inprogress: false,
+        comments: [],
+        archive: false,
+        createdAt: new Date()
+      },
+      {
+        id:parseInt(getRandomIdNumber(6)),
+        title:'This is your last task',
+        description:'Task Task Task Task',
+        category:'Climate',
+        inprogress: false,
+        comments: [],
+        archive: false,
+        createdAt: new Date()
+      },
+      {
+        id:parseInt(getRandomIdNumber(6)),
+        title:'This is your third task',
+        description:'Hey man',
+        category:'Horticulture',
+        inprogress: false,
+        comments: [],
+        archive: false,
+        createdAt: new Date()
+      },
+      {
+        id:parseInt(getRandomIdNumber(6)),
+        title:'This is your last task',
+        description:'Task Task Task Task',
+        category:'Climate',
+        inprogress: false,
+        comments: [],
+        archive: false,
+        createdAt: new Date()
       } 
 ]
 
@@ -71,6 +111,10 @@ export const initialStates = {
     filteredTasks: [],
     filterState: false,
     themeState: false,
-    categoryTasks: {}
+    categoryTasks: {},
+    // view mode changes
+    views: ["all", "categoryView"],
+    allView: false,
+    categoryView: false,
 }
 

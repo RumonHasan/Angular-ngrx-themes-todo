@@ -7,7 +7,8 @@ import { Store } from '@ngrx/store';
 // import { AngularFireDatabase } from '@angular/fire/compat/database';
 // import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
-import { controlThemeState, filterTasks, passTasksByCategories, switchFilterState } from './state/tasks.actions';
+import { activateAllView, activateCategoryView, 
+  controlThemeState, filterTasks, passTasksByCategories, turnToDefaultView } from './state/tasks.actions';
 
 @Component({
   selector: 'app-root',
@@ -31,12 +32,18 @@ export class AppComponent {
   // categorical tasks
   categoricalTasks!: object;
 
+  //view variables
+  views: any;
+  currentViewState: string = ''; // current view state in words
+  localCategoryView!: boolean;
+  localAllView!: boolean;
+
   constructor(
     private dialog: MatDialog,
     // getting the initial state from the task reducer
     private taskStore: Store<{taskReducer: {tasks: Task[], categories: [], 
       filterState: boolean, filteredTasks: Task[], themeState: boolean,
-      categoryTasks: object}}>,
+      categoryTasks: object, views:any, categoryView: boolean, allView: boolean}}>,
     private overlayContainer: OverlayContainer,
     ){}
   //function to open a dialog box for adding a new todo
@@ -68,6 +75,16 @@ export class AppComponent {
       // get the data from category based on tasks
     this.taskStore.select('taskReducer').subscribe((data)=>
         this.categoricalTasks = data.categoryTasks
+    );
+    // get the views
+    this.taskStore.select('taskReducer').subscribe((data)=>
+      this.views = data.views
+    );
+    // category views
+    this.taskStore.select('taskReducer').subscribe((data)=>{
+      this.localCategoryView = data.categoryView;
+      this.localAllView = data.allView;
+    }
     )
   }
   // open dialog 
@@ -84,9 +101,11 @@ export class AppComponent {
     const searchTerm = this.searchTerm.getRawValue();
     // custom search and switching back to default list
     if(searchTerm?.toLowerCase() === this.allSearch.toLowerCase()){
-      this.taskStore.dispatch(switchFilterState());
+      this.taskStore.dispatch(filterTasks({searchTerm: searchTerm, filterState: this.localFilterState}));
+      this.taskStore.dispatch(turnToDefaultView());
     }else{
       this.taskStore.dispatch(filterTasks({searchTerm: searchTerm, filterState: this.localFilterState}));
+      this.taskStore.dispatch(turnToDefaultView());
     }
   };
   // theme toggle switch function
@@ -104,5 +123,12 @@ export class AppComponent {
     this.overlayContainer.getContainerElement().classList.remove('light-theme');
     this.overlayContainer.getContainerElement().classList.add('dark-theme');
    }
+  }
+  // get changes in view
+  changeView(viewStateValue: any){
+    const selectValue = viewStateValue.source.value;
+    if(selectValue.toLowerCase() === 'categoryview'){
+      this.taskStore.dispatch(activateCategoryView());
+    }
   }
 }

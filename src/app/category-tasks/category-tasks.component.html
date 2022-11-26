@@ -4,11 +4,17 @@
                 #{{textFormatter(categoryTask.key)}}
             </h1>
             <li class="task-card" *ngFor="let task of fetchObjectValues(categoryTask.key)">
-                <mat-card>
-                    {{task.title}}
-                    <div style="color:rgb(246, 122, 122);">
-                        Description: {{task.description}}
+                <mat-card fxFlex>
+                    <div>
+                        {{task.title}}
+                        <div style="color:rgb(246, 122, 122);">
+                            Description: {{task.description}}
+                        </div>
                     </div>
+                    <mat-card-actions>
+                        <button mat-raised-button color="warn" (click)="getDeleteId(task.id, task.category)" >Delete</button>
+                        <button mat-raised-button color="primary" (click)="getEditContent(task)">Edit</button>
+                    </mat-card-actions>
                 </mat-card>
             </li>
         </ul>
