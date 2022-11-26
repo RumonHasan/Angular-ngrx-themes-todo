@@ -130,5 +130,8 @@ export class AppComponent {
     if(selectValue.toLowerCase() === 'categoryview'){
       this.taskStore.dispatch(activateCategoryView());
     }
+    if(selectValue.toLowerCase() === 'all'){
+      this.taskStore.dispatch(turnToDefaultView());
+    } 
   }
 }
