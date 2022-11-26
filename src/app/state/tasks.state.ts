@@ -113,7 +113,7 @@ export const initialStates = {
     themeState: false,
     categoryTasks: {},
     // view mode changes
-    views: ["all", "categoryView"],
+    views: ["categoryView"],
     allView: false,
     categoryView: false,
 }

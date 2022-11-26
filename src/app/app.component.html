@@ -36,7 +36,7 @@
         <mat-select [(value)]="currentViewState">
           <mat-option value="all">Default</mat-option>
           <mat-option *ngFor="let view of views" [value]="view" (onSelectionChange)="changeView($event)">
-              {{view === 'all' ? 'All' : 'Category View'}}
+              {{view === 'categoryView' && 'Category View'}}
           </mat-option>
         </mat-select>
       </mat-form-field>
