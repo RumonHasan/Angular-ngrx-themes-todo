@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 // import { AngularFireDatabase } from '@angular/fire/compat/database';
 // import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
@@ -37,6 +38,10 @@ export class AppComponent {
   currentViewState: string = ''; // current view state in words
   localCategoryView!: boolean;
   localAllView!: boolean;
+
+  // inprogress list and done list
+  doneList: any = [];
+  inProgressList: any = [];
 
   constructor(
     private dialog: MatDialog,
@@ -85,8 +90,30 @@ export class AppComponent {
       this.localCategoryView = data.categoryView;
       this.localAllView = data.allView;
     }
-    )
+    );
+    // fetch the progress and inprogress tasks
+    this.taskStore.select('taskReducer').subscribe((data)=>
+      data.tasks.map((singleTask: any)=> 
+        singleTask.inprogress === true ? this.doneList.push(singleTask) : 
+        this.inProgressList.push(singleTask)
+      )
+    );
   }
+
+  // drag and drop controls
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
+
   // open dialog 
   openDialog(){
     this.dialog.open(TaskDialogComponent,{

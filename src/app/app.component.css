@@ -5,9 +5,14 @@
 
 .app-wrapper {
   display: flex;
-  height: 100%;
   width: 100%;
-  flex-direction: column;
+  width: 100%;
+}
+.app-left {
+  width: 50%;
+}
+.app-right {
+  width: 50%;
 }
 
 .category-wrapper {
@@ -38,12 +43,10 @@
 }
 .all-task-container {
   padding: 10px;
-  height: 100%;
-  flex-wrap: wrap;
-  max-height: 400px;
+  max-width: 500px;
+  max-height: 800px;
   display: grid;
-  display: grid;
-  grid-template-columns: 1fr 1fr 350px;
+  overflow-y: auto;
 }
 
 .add-button {

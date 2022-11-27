@@ -1,5 +1,6 @@
-<div class="category-task-container" fxFlex> 
-        <ul *ngFor="let categoryTask of categoryTasks | keyvalue" class="category-task-block">
+<div class="category-task-container" cdkDropListGroup fxFlex> 
+        <ul cdkDropList
+         *ngFor="let categoryTask of categoryTasks | keyvalue" class="category-task-block">
             <h1 class="category-header" style="color:white; font-weight:bold">
                 #{{textFormatter(categoryTask.key)}}
             </h1>

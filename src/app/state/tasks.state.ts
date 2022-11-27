@@ -64,7 +64,7 @@ const taskItems: Task[] = [
         title:'This is your third task',
         description:'Hey man',
         category:'Horticulture',
-        inprogress: false,
+        inprogress: true,
         comments: [],
         archive: false,
         createdAt: new Date()
@@ -74,7 +74,7 @@ const taskItems: Task[] = [
         title:'This is your last task',
         description:'Task Task Task Task',
         category:'Climate',
-        inprogress: false,
+        inprogress: true,
         comments: [],
         archive: false,
         createdAt: new Date()
@@ -84,7 +84,7 @@ const taskItems: Task[] = [
         title:'This is your third task',
         description:'Hey man',
         category:'Horticulture',
-        inprogress: false,
+        inprogress: true,
         comments: [],
         archive: false,
         createdAt: new Date()
@@ -94,7 +94,7 @@ const taskItems: Task[] = [
         title:'This is your last task',
         description:'Task Task Task Task',
         category:'Climate',
-        inprogress: false,
+        inprogress: true,
         comments: [],
         archive: false,
         createdAt: new Date()

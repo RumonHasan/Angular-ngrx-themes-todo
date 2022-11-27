@@ -5,6 +5,7 @@ import { EditDialogComponent } from '../task/edit-dialog/edit-dialog.component';
 // task reducer
 import { deleteTask, deleteCategorySearch, switchFilterState, passTasksByCategories, editTaskDialogState } from '../state/tasks.actions';
 import { MatDialog } from '@angular/material/dialog';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-category-tasks',
   templateUrl: './category-tasks.component.html',
@@ -36,6 +37,21 @@ export class CategoryTasksComponent implements OnInit {
       index === 0 ? letter.toUpperCase() : letter
     );
     return newHeader.join('');
+  }
+
+  // drag and drop functions
+  dropTask(event: CdkDragDrop<any>){
+    // basic drop boiler plate
+    if(event.previousContainer === event.container){
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    }else{
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      )
+    }
   }
 
   // delete from category

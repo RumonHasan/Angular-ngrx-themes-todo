@@ -64,38 +64,52 @@
         <mat-icon>add</mat-icon> Add New Task
       </button>
     </div>
-  
   </mat-toolbar>
+
   <!-- app wrapper-->
-  <div *ngIf="!localCategoryView" class="app-wrapper" >
-    <div *ngIf="!localFilterState">
+  <div *ngIf="!localCategoryView" class="app-wrapper" fxFill>
+    <div class="app-left">
+      <div *ngIf="!localFilterState">
+        <h3 class="task-header">
+          All Tasks: {{todos.length}}
+        </h3>
+      </div>
+  
+      <div *ngIf="localFilterState">
+        <h3 class="task-header">
+          Filtered Tasks: {{filteredTodos.length}}
+        </h3>
+      </div>
+      
+      <div class="all-task-container" *ngIf="localFilterState">
+          <app-task *ngFor="let task of filteredTodos" [task]="task"
+          ></app-task>
+      </div>
+  
+      <div class="all-task-container" *ngIf="!localFilterState">
+          <app-task *ngFor="let task of inProgressList" [task]="task"
+          ></app-task>
+      </div>
+    </div>
+
+    <div class="app-right">
       <h3 class="task-header">
-        All Tasks
+        Done:
       </h3>
-    </div>
-
-    <div *ngIf="localFilterState">
-      <h3 class="task-header">
-        Filtered Tasks
-      </h3>
-    </div>
-    
-    <div class="all-task-container" *ngIf="localFilterState">
-        <app-task *ngFor="let task of filteredTodos" [task]="task"
+      <div class="all-task-container">
+        <app-task
+          *ngFor="let task of doneList" [task]="task"
         ></app-task>
+      </div>
     </div>
 
 
-    <div class="all-task-container" *ngIf="!localFilterState">
-        <app-task *ngFor="let task of todos" [task]="task"
-        ></app-task>
-    </div>
   
   </div>
 
   <div *ngIf="localCategoryView" class="category-wrapper">
     <h3 class="task-header">
-      Categorical Distribution
+      Category View
     </h3>
     <div class="category-task-container">
       <app-category-tasks [categoryTasks]="categoricalTasks"></app-category-tasks>

@@ -16,6 +16,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { KanbanAllModule } from '@syncfusion/ej2-angular-kanban';
 // animation
+// drag drop module
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskComponent } from './task/task.component';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
@@ -63,6 +65,8 @@ import { CategoryTasksComponent } from './category-tasks/category-tasks.componen
     MatListModule,
     MatAutocompleteModule,
     KanbanAllModule,
+    // drag drop module
+    DragDropModule,
     // reducer store module
     StoreModule.forRoot({
       taskReducer: taskReducer
