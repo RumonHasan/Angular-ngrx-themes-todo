@@ -19,7 +19,8 @@ export const ACTIONS = {
     // view actions
     CATEGORY_VIEW: "CATEGORY_VIEW",
     ALL_VIEW: "ALL_VIEW",
-    DEFAULT_VIEW: "DEFAULT_VIEW"
+    DEFAULT_VIEW: "DEFAULT_VIEW",
+    UPLOAD_DONE: "UPLOAD_DONE"
 }
 export const getTasks = createAction(ACTIONS.GET);
 // passing props to add new task
@@ -52,3 +53,6 @@ export const getViews = createAction(ACTIONS.GET_VIEWS);
 export const activateCategoryView = createAction(ACTIONS.CATEGORY_VIEW);
 export const activateAllView = createAction(ACTIONS.ALL_VIEW);
 export const turnToDefaultView = createAction(ACTIONS.DEFAULT_VIEW);
+
+// task completion function
+export const uploadDoneTasks = createAction(ACTIONS.UPLOAD_DONE);

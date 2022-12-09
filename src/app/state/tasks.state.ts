@@ -116,5 +116,9 @@ export const initialStates = {
     views: ["categoryView"],
     allView: false,
     categoryView: false,
+    // inprogress and done tasks
+    inprogressTasks: [],
+    doneTasks: []
+
 }
 

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { FormControl, FormGroup, } from '@angular/forms';
-import { editTask, passTasksByCategories } from 'src/app/state/tasks.actions';
+import { editTask, passTasksByCategories, uploadDoneTasks } from 'src/app/state/tasks.actions';
 @Component({
   selector: 'app-edit-dialog',
   templateUrl: './edit-dialog.component.html',
@@ -59,7 +59,7 @@ export class EditDialogComponent implements OnInit {
         this.afterEditTasks = data.tasks;
       }); // passing the edited tasks and categories
       this.taskStore.dispatch(passTasksByCategories({categories: this.afterEditCategories, tasks: this.afterEditTasks}));
-      
+      this.taskStore.dispatch(uploadDoneTasks());
     }else{
       console.log('edit form is empty');
     }

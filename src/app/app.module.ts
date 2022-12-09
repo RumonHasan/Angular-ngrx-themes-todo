@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { KanbanAllModule } from '@syncfusion/ej2-angular-kanban';
+// http client module
+import { HttpClientModule } from '@angular/common/http';
 // animation
 // drag drop module
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -35,6 +37,7 @@ import { CommentDialogComponent } from './task/comment-dialog/comment-dialog.com
 import { environment } from './firebase/firebase_credentials';
 import { InprogressTaskComponent } from './inprogress-task/inprogress-task.component';
 import { CategoryTasksComponent } from './category-tasks/category-tasks.component';
+import { QuickSearchComponentComponent } from './quick-search-component/quick-search-component.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,7 @@ import { CategoryTasksComponent } from './category-tasks/category-tasks.componen
     CommentDialogComponent,
     InprogressTaskComponent,
     CategoryTasksComponent,
+    QuickSearchComponentComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +69,7 @@ import { CategoryTasksComponent } from './category-tasks/category-tasks.componen
     MatListModule,
     MatAutocompleteModule,
     KanbanAllModule,
+    HttpClientModule,
     // drag drop module
     DragDropModule,
     // reducer store module

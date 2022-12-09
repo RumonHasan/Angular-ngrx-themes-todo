@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Task } from './task';
-import { deleteCategorySearch, deleteComment, deleteTask, editTaskDialogState, getCommentId, passTasksByCategories, switchFilterState, toggleArchiveState } from '../state/tasks.actions';
+import { deleteCategorySearch, deleteComment, deleteTask, editTaskDialogState, getCommentId, passTasksByCategories, switchFilterState, toggleArchiveState, uploadDoneTasks } from '../state/tasks.actions';
 import { Store } from '@ngrx/store';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
@@ -104,7 +104,7 @@ export class TaskComponent implements OnInit {
         if(result.value){
           // edit logic function
           this.openEditDialog();
-          this.taskStore.dispatch(editTaskDialogState({editStateId: editId}))
+          this.taskStore.dispatch(editTaskDialogState({editStateId: editId}));
         }else if(result.dismiss === Swal.DismissReason.cancel){
           Swal.fire('Cancelled', 'Task is unchanged', 'error')
         }
@@ -133,6 +133,8 @@ export class TaskComponent implements OnInit {
               this.afterDeleteTasks = data.tasks;
             }
           );
+          // updating the done tasks
+          this.taskStore.dispatch(uploadDoneTasks());
           // pass it on to the next categories and tasks
           this.taskStore.dispatch(passTasksByCategories({categories: this.afterDeleteCategories, tasks: this.afterDeleteTasks}));
           Swal.fire(

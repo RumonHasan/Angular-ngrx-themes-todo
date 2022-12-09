@@ -1,4 +1,4 @@
-<div class="parent-wrapper" [class.light-theme]="themeStateLocal" >
+<div class="parent-wrapper" [class.light-theme]="themeStateLocal" (keypress)="handleKeyBoardEvent($event)" >
   <!-- Footer -->
   <mat-toolbar class="toolbar">
     <div class="toolbar-header">
@@ -87,14 +87,14 @@
       </div>
   
       <div class="all-task-container" *ngIf="!localFilterState">
-          <app-task *ngFor="let task of inProgressList" [task]="task"
+          <app-task *ngFor="let task of todos" [task]="task"
           ></app-task>
       </div>
     </div>
 
     <div class="app-right">
       <h3 class="task-header">
-        Done:
+        Done: {{doneList.length}}
       </h3>
       <div class="all-task-container">
         <app-task
@@ -102,8 +102,6 @@
         ></app-task>
       </div>
     </div>
-
-
   
   </div>
 

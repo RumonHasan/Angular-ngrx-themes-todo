@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject } from '@angular/core';
 import { Task } from './task/task';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 // import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormControl } from '@angular/forms';
 import { activateAllView, activateCategoryView, 
-  controlThemeState, filterTasks, passTasksByCategories, turnToDefaultView } from './state/tasks.actions';
+  controlThemeState, filterTasks, passTasksByCategories, turnToDefaultView, uploadDoneTasks } from './state/tasks.actions';
+import { Dialog } from '@angular/cdk/dialog';
+import { QuickSearchComponentComponent } from './quick-search-component/quick-search-component.component';
 
 @Component({
   selector: 'app-root',
@@ -42,12 +44,18 @@ export class AppComponent {
   // inprogress list and done list
   doneList: any = [];
   inProgressList: any = [];
+  // quick search 
+  private searchDialogTriggerEl!: ElementRef;
 
   constructor(
     private dialog: MatDialog,
+    private quickSearchDialog: MatDialog,
+    // private quickSearchDialogRef: MatDialogRef<QuickSearchComponentComponent>,
     // getting the initial state from the task reducer
     private taskStore: Store<{taskReducer: {tasks: Task[], categories: [], 
-      filterState: boolean, filteredTasks: Task[], themeState: boolean,
+      filterState: boolean, filteredTasks: Task[], themeState: boolean, 
+      // in progress and done tasks
+      doneTasks:[], inprogressTasks:[],
       categoryTasks: object, views:any, categoryView: boolean, allView: boolean}}>,
     private overlayContainer: OverlayContainer,
     ){}
@@ -58,6 +66,12 @@ export class AppComponent {
     this.taskStore.select('taskReducer').subscribe((data)=> 
       this.todos = data.tasks
     );
+    // upload and fetch done tasks
+    this.taskStore.dispatch(uploadDoneTasks());
+    this.taskStore.select('taskReducer').subscribe((data)=>{
+      this.doneList = data.doneTasks;
+    })
+
     // populating categories and creating a new set from array
     this.taskStore.select('taskReducer').subscribe((data)=>
       this.categories = [...new Set([...data.categories])]
@@ -90,13 +104,6 @@ export class AppComponent {
       this.localCategoryView = data.categoryView;
       this.localAllView = data.allView;
     }
-    );
-    // fetch the progress and inprogress tasks
-    this.taskStore.select('taskReducer').subscribe((data)=>
-      data.tasks.map((singleTask: any)=> 
-        singleTask.inprogress === true ? this.doneList.push(singleTask) : 
-        this.inProgressList.push(singleTask)
-      )
     );
   }
 
@@ -160,5 +167,38 @@ export class AppComponent {
     if(selectValue.toLowerCase() === 'all'){
       this.taskStore.dispatch(turnToDefaultView());
     } 
+  }
+
+  // quick search dialog control
+
+  // setting dimensions
+  setMatDialogDimenions(){
+    const defaultPosition = {
+      top: '40px',
+      bottom: '0px'
+    }
+    return defaultPosition;
+  }
+  // quick search features
+  openQuickSearchDialog(){
+    this.quickSearchDialog.open(QuickSearchComponentComponent,
+      {
+        width: '500px',
+        height: '90px',
+        position: this.setMatDialogDimenions(),
+      }  
+    )
+  };
+  // application host listener for detecting keypress
+  @HostListener('document:keypress', ['$event'])
+  handleKeyBoardEvent(keyPressEvent: KeyboardEvent){
+    const searchbarKey = {
+      ctrlKey: keyPressEvent.ctrlKey,
+      commandKey: keyPressEvent.metaKey,
+      key: 'k'
+    };
+    if((searchbarKey.ctrlKey || searchbarKey.commandKey) && searchbarKey.key.toLowerCase() === 'k'){
+      this.openQuickSearchDialog();
+    }
   }
 }

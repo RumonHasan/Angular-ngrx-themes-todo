@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import Swal from 'sweetalert2';
 import { EditDialogComponent } from '../task/edit-dialog/edit-dialog.component';
 // task reducer
-import { deleteTask, deleteCategorySearch, switchFilterState, passTasksByCategories, editTaskDialogState } from '../state/tasks.actions';
+import { deleteTask, deleteCategorySearch, switchFilterState, uploadDoneTasks, passTasksByCategories, editTaskDialogState } from '../state/tasks.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 @Component({
@@ -39,21 +39,20 @@ export class CategoryTasksComponent implements OnInit {
     return newHeader.join('');
   }
 
-  // drag and drop functions
-  dropTask(event: CdkDragDrop<any>){
-    // basic drop boiler plate
-    if(event.previousContainer === event.container){
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    }else{
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      )
-    }
-  }
-
+  // // drag and drop functions
+  // dropTask(event: CdkDragDrop<any>){
+  //   // basic drop boiler plate
+  //   if(event.previousContainer === event.container){
+  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //   }else{
+  //     transferArrayItem(
+  //       event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex
+  //     )
+  //   }
+  // }
   // delete from category
    // get delete id
    getDeleteId(id:any, category: any){
@@ -80,6 +79,7 @@ export class CategoryTasksComponent implements OnInit {
         );
         // pass it on to the next categories and tasks
         this.taskStore.dispatch(passTasksByCategories({categories: this.afterDeleteCategories, tasks: this.afterDeleteTasks}));
+        this.taskStore.dispatch(uploadDoneTasks());
         Swal.fire(
           'Deleted',
           'Task has been deleted',
@@ -113,7 +113,8 @@ export class CategoryTasksComponent implements OnInit {
         if(result.value){
           // edit logic function
           this.openEditDialog();
-          this.taskStore.dispatch(editTaskDialogState({editStateId: editId}))
+          this.taskStore.dispatch(editTaskDialogState({editStateId: editId}));
+          this.taskStore.dispatch(uploadDoneTasks());
         }else if(result.dismiss === Swal.DismissReason.cancel){
           Swal.fire('Cancelled', 'Task is unchanged', 'error')
         }

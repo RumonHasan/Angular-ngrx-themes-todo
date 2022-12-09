@@ -5,7 +5,7 @@ import { getTasks, addNewTask, deleteTask, editTaskDialogState, editTask,
     toggleArchiveState, deleteCategorySearch, 
     filterTasks, switchFilterState, controlThemeState,
      passTasksByCategories, getViews, activateCategoryView, 
-     activateAllView, turnToDefaultView } from "./tasks.actions";
+     activateAllView, turnToDefaultView, uploadDoneTasks } from "./tasks.actions";
 
 // main task reducer
 const task_reducer = createReducer(initialStates, 
@@ -159,7 +159,7 @@ const task_reducer = createReducer(initialStates,
                 filterState: false,
             }
         }else{
-            const filteredTasks = existingTasks.filter((task: any)=>
+            const filteredTasks: any = existingTasks.filter((task: any)=>
             task.category.toLowerCase().startsWith(searchTerm.toLowerCase()) || 
             task.title.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
@@ -221,6 +221,16 @@ const task_reducer = createReducer(initialStates,
         return {
             ...state,
             categoryView: false,
+        }
+    }),
+    // upload in person task
+    on(uploadDoneTasks, (state : any)=>{
+        const newDoneTasks = state.tasks.filter((singleTask: any)=>
+            singleTask.inprogress === true
+        );
+        return {
+            ...state,
+            doneTasks: newDoneTasks,
         }
     })
  );
